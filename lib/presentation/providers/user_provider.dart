@@ -178,6 +178,17 @@ class OnboardingNotifier extends StateNotifier<OnboardingState> {
           _te('ex_020', 'Tricep Pushdown', 'Triceps', 'Cable', 3, 12, 25),
         ]);
         break;
+
+      default:
+        // For 'custom' or empty/unknown, generate a basic full body template
+        await _createTemplate('Full Body Workout', 0, [
+          _te('ex_024', 'Barbell Squat', 'Legs', 'Barbell', 3, 10, 60),
+          _te('ex_001', 'Barbell Bench Press', 'Chest', 'Barbell', 3, 10, 50),
+          _te('ex_007', 'Barbell Row', 'Back', 'Barbell', 3, 10, 40),
+          _te('ex_011', 'Overhead Press', 'Shoulders', 'Barbell', 3, 10, 30),
+          _te('ex_016', 'Barbell Curl', 'Biceps', 'Barbell', 3, 10, 20),
+        ]);
+        break;
     }
   }
 

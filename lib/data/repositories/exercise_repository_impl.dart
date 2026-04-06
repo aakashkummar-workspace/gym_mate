@@ -65,7 +65,11 @@ class ExerciseRepositoryImpl implements ExerciseRepository {
 
   @override
   Future<void> seedDefaultExercises() async {
-    if (_box.isNotEmpty) return;
+    // Re-seed if box is empty OR if exercises are missing new fields (difficulty/secondaryMuscle)
+    final needsReseed = _box.isEmpty ||
+        _box.values.any((e) => e.difficulty.isEmpty && !e.isCustom);
+    if (!needsReseed) return;
+
     for (final data in ExerciseDatabase.defaultExercises) {
       final exercise = ExerciseModel(
         id: data['id'] as String,

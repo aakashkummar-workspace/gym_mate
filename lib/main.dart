@@ -10,12 +10,8 @@ import 'package:gym_mate/data/repositories/user_repository_impl.dart';
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
 
-  // Lock to portrait
-  await SystemChrome.setPreferredOrientations([
-    DeviceOrientation.portraitUp,
-  ]);
+  await SystemChrome.setPreferredOrientations([DeviceOrientation.portraitUp]);
 
-  // Set system UI style
   SystemChrome.setSystemUIOverlayStyle(const SystemUiOverlayStyle(
     statusBarColor: Colors.transparent,
     statusBarIconBrightness: Brightness.light,
@@ -23,13 +19,9 @@ void main() async {
     systemNavigationBarIconBrightness: Brightness.light,
   ));
 
-  // Initialize Hive
   await HiveService.init();
-
-  // Seed default exercises
   await ExerciseRepositoryImpl().seedDefaultExercises();
 
-  // Check onboarding
   final onboardingCompleted = await UserRepositoryImpl().isOnboardingCompleted();
 
   runApp(
@@ -39,15 +31,19 @@ void main() async {
   );
 }
 
-class GymateApp extends StatelessWidget {
+class GymateApp extends StatefulWidget {
   final bool onboardingCompleted;
-
   const GymateApp({super.key, required this.onboardingCompleted});
 
   @override
-  Widget build(BuildContext context) {
-    final router = createRouter(onboardingCompleted: onboardingCompleted);
+  State<GymateApp> createState() => _GymateAppState();
+}
 
+class _GymateAppState extends State<GymateApp> {
+  late final router = createRouter(onboardingCompleted: widget.onboardingCompleted);
+
+  @override
+  Widget build(BuildContext context) {
     return MaterialApp.router(
       title: 'Gymate',
       debugShowCheckedModeBanner: false,

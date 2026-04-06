@@ -63,7 +63,7 @@ lib/
 | Layer | Technology |
 |---|---|
 | Framework | Flutter (latest stable) |
-| State Management | flutter_riverpod |
+| State Management | flutter_riverpod | 
 | Local Database | Hive + hive_flutter |
 | Navigation | go_router |
 | Charts | fl_chart |

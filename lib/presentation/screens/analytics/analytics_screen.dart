@@ -235,7 +235,7 @@ class _ExerciseSelector extends ConsumerWidget {
 
     return exercisesAsync.when(
       data: (exercises) => DropdownButtonFormField<String>(
-        value: selectedId,
+        initialValue: selectedId,
         hint: const Text('Select exercise'),
         items: exercises
             .map((e) => DropdownMenuItem(value: e.id, child: Text(e.name)))

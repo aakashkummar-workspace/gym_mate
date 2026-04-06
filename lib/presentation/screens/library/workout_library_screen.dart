@@ -27,11 +27,13 @@ class _WorkoutLibraryScreenState extends ConsumerState<WorkoutLibraryScreen> {
     super.dispose();
   }
 
-  List<ExerciseModel> _applyFilters(List<ExerciseModel> exercises) {
+  List<ExerciseModel> _applyFilters(
+    List<ExerciseModel> exercises, {
+    required String? muscleGroup,
+    required String? equipment,
+    required String? difficulty,
+  }) {
     var filtered = exercises;
-    final muscleGroup = ref.read(selectedMuscleGroupProvider);
-    final equipment = ref.read(selectedEquipmentProvider);
-    final difficulty = ref.read(_selectedDifficultyProvider);
 
     if (_searchQuery.isNotEmpty) {
       final q = _searchQuery.toLowerCase();
@@ -171,7 +173,10 @@ class _WorkoutLibraryScreenState extends ConsumerState<WorkoutLibraryScreen> {
           Expanded(
             child: exercisesAsync.when(
               data: (exercises) {
-                final filtered = _applyFilters(exercises);
+                final filtered = _applyFilters(exercises,
+                    muscleGroup: selectedGroup,
+                    equipment: selectedEquip,
+                    difficulty: selectedDiff);
                 if (filtered.isEmpty) {
                   return Center(
                     child: Column(
